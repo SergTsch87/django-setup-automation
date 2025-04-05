@@ -1,9 +1,14 @@
-def some_func(a: int, b: int):
+def some_func_1(a: int, b: int):
     return a + b
 
 
+def some_func_2():
+    print('some text')
+
+
 def main():
-    print(some_func(4, 7))
+    some_func_2()
+    print(some_func_1(4, 7))
 
 
 if __name__ == '__main__':
