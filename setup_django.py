@@ -13,6 +13,7 @@
 
 import os
 import pathlib
+import subprocess
 
 
 def some_func_1(a: int, b: int):
@@ -32,11 +33,16 @@ def is_path_venv_file(path_file):
 
 
 def main():
-    path_venv_file = '/.venv/Scripts/python.exe'
-    if is_path_venv_file(path_venv_file):
-        print(f'+ Файл {path_venv_file} існує')
-    else:
-        print(f'- Файл {path_venv_file} не існує')
+    # path_venv_file = '/.venv/Scripts/python.exe'
+    # if is_path_venv_file(path_venv_file):
+    #     print(f'+ Файл {path_venv_file} існує')
+    # else:
+    #     print(f'- Файл {path_venv_file} не існує')
+
+    try:
+        subprocess.run(['pwsh', '-Command', f'ls {os.getcwd()}'])
+    except FileNotFoundError as e:
+        subprocess.run(['powershell', '-Command', f'ls {os.getcwd()}'])
 
 
 if __name__ == '__main__':
