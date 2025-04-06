@@ -39,10 +39,15 @@ def main():
     # else:
     #     print(f'- Файл {path_venv_file} не існує')
 
-    try:
-        subprocess.run(['pwsh', '-Command', f'ls {os.getcwd()}'])
-    except FileNotFoundError as e:
-        subprocess.run(['powershell', '-Command', f'ls {os.getcwd()}'])
+    # subprocess.run(['powershell', '-Command', f'ls "{os.getcwd()}"'])
+    subprocess.run(['powershell', '-Command', 'py -m venv .venv2'])
+    
+    # subprocess.run(['pwsh', '-Command', f'ls "{os.getcwd()}"'])
+    
+    # try:
+    #     subprocess.run(['pwsh', '-Command', f'ls "{os.getcwd()}"'])
+    # except FileNotFoundError as e:
+    #     subprocess.run(['powershell', '-Command', f'ls "{os.getcwd()}"'])
 
 
 if __name__ == '__main__':
