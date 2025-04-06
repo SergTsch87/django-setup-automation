@@ -23,13 +23,20 @@ def some_func_2():
     print('some text')
 
 
-def main():
-    venv_file = f'{os.getcwd()}/.venv/Scripts/python.exe'
-    # if venv_file.exists():
+def is_path_venv_file(path_file):
+    venv_file = f'{os.getcwd()}{path_file}'
     if os.path.isfile(venv_file):
-        print(f'+ Файл {venv_file} існує')
+        return True
     else:
-        print(f'- Файл {venv_file} не існує')
+        return False
+
+
+def main():
+    path_venv_file = '/.venv/Scripts/python.exe'
+    if is_path_venv_file(path_venv_file):
+        print(f'+ Файл {path_venv_file} існує')
+    else:
+        print(f'- Файл {path_venv_file} не існує')
 
 
 if __name__ == '__main__':
