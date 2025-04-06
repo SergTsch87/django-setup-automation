@@ -11,6 +11,9 @@
 # You can store the activation command as a string and optionally run it via a subprocess or display it for manual activation.  
 # Use `sys` for paths and environment-related checks if needed.
 
+import os
+import pathlib
+
 
 def some_func_1(a: int, b: int):
     return a + b
@@ -21,8 +24,12 @@ def some_func_2():
 
 
 def main():
-    some_func_2()
-    print(some_func_1(4, 7))
+    venv_file = f'{os.getcwd()}/.venv/Scripts/python.exe'
+    # if venv_file.exists():
+    if os.path.isfile(venv_file):
+        print(f'+ Файл {venv_file} існує')
+    else:
+        print(f'- Файл {venv_file} не існує')
 
 
 if __name__ == '__main__':
