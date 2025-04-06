@@ -1,3 +1,17 @@
+# Task 2: Automate Dependency Handling
+# Write a Python script that:
+# Checks if a virtual environment exists.
+# If not, creates and activates it
+
+
+# To solve this task, use the built-in `os` and `pathlib` modules to check for the virtual environment folder.  
+# Use the `subprocess` module to run shell commands from within Python.  
+# To create a virtual environment, use the `venv` module.  
+# Detect the OS using `platform` to choose the correct activation method (Windows vs. Unix).  
+# You can store the activation command as a string and optionally run it via a subprocess or display it for manual activation.  
+# Use `sys` for paths and environment-related checks if needed.
+
+
 def some_func_1(a: int, b: int):
     return a + b
 
