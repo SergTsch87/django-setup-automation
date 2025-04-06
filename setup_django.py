@@ -14,6 +14,7 @@
 import os
 import pathlib
 import subprocess
+import platform
 
 
 def some_func_1(a: int, b: int):
@@ -32,6 +33,10 @@ def is_path_venv_file(path_file):
         return False
 
 
+def get_name_os():
+    return platform.system()
+
+
 def main():
     # path_venv_file = '/.venv/Scripts/python.exe'
     # if is_path_venv_file(path_venv_file):
@@ -40,7 +45,11 @@ def main():
     #     print(f'- Файл {path_venv_file} не існує')
 
     # subprocess.run(['powershell', '-Command', f'ls "{os.getcwd()}"'])
-    subprocess.run(['powershell', '-Command', 'py -m venv .venv2'])
+    
+    # !
+    # subprocess.run(['powershell', '-Command', 'py -m venv .venv2'])
+
+    print(get_name_os())
     
     # subprocess.run(['pwsh', '-Command', f'ls "{os.getcwd()}"'])
     
