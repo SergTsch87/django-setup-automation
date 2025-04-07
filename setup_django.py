@@ -15,6 +15,7 @@ import os
 import pathlib
 import subprocess
 import platform
+import inspect
 
 
 def some_func_1(a: int, b: int):
@@ -49,7 +50,26 @@ def main():
     # !
     # subprocess.run(['powershell', '-Command', 'py -m venv .venv2'])
 
-    print(get_name_os())
+    # print(inspect.get(inspect.currentframe()))
+    # print(inspect.args(subprocess.run(['powershell', '-Command', 'ls'])))
+    # print(inspect.signature( subprocess.run(['powershell', '-Command', 'ls']) ).arguments)
+
+    # print(get_name_os())
+
+    shell = os.environ.get('SHELL') or os.environ.get('COMSPEC', '').lower()
+    
+    if get_name_os() == 'Windows':
+        if 'powershell' in shell or 'pwsh' in shell:
+            subprocess.run(['pwsh', '-Command', '.venv\\Scripts\\Activate.ps1'])
+        if 'cmd' in shell:
+            subprocess.run(['cmd.exe', '/k', '.venv\\Scripts\\activate.bat'])
+    elif get_name_os() == 'Unix':
+        subprocess.run(['pwsh', '-Command', '.venv\\bin\\Activate.ps1'])
+
+    # # !!!
+    # # if you want to run commands inside the activated environment, you should:
+    # subprocess.run(['pwsh', '-Command', '& .venv\\Scripts\\Activate.ps1; python your_script.py'])
+    
     
     # subprocess.run(['pwsh', '-Command', f'ls "{os.getcwd()}"'])
     
