@@ -12,10 +12,23 @@
 # Use `sys` for paths and environment-related checks if needed.
 
 import os
-# import pathlib
+import sys
 import subprocess
 import platform
-# import inspect
+from  pathlib import Path
+
+
+def get_os():
+    return platform.system()
+
+
+def is_file(path: Path) -> bool:
+    return path.is_file()
+
+
+def create_venv(venv_path: Path):
+    print(f'Creating virtual environment at: {venv_path}')
+    subprocess.run([sys.executable, '-m', 'venv', str(venv_path)])
 
 
 def is_path_file(path_file):
