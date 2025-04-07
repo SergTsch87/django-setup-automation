@@ -31,27 +31,30 @@ def create_venv(venv_path: Path):
     subprocess.run([sys.executable, '-m', 'venv', str(venv_path)])
 
 
-def is_path_file(path_file):
-    if os.path.isfile(path_file):
-        return True
+def activate_venv():
+    shell = os.environ.get('SHELL', '').lower() or os.environ.get('COMSPEC', '').lower()
+    os_name = get_os()
+    
+    if os_name() == 'Windows':
+        if 'powershell' in shell or 'pwsh' in shell:
+            # subprocess.run(['pwsh', '-Command', '.venv\\Scripts\\Activate.ps1'])
+            return ['pwsh', '-Command', '& .venv\\Scripts\\Activate.ps1;']
+        elif 'cmd' in shell:
+            return ['cmd.exe', '/k', '.venv\\Scripts\\activate.bat']
     else:
-        return False
+        return ['pwsh', '-Command', '& .venv/bin/Activate.ps1;']
+
+
+# def is_path_file(path_file):
+#     if os.path.isfile(path_file):
+#         return True
+#     else:
+#         return False
 
 
 def get_name_os():
     return platform.system()
 
-
-def venv_activate():
-    shell = os.environ.get('SHELL') or os.environ.get('COMSPEC', '').lower()
-    
-    if get_name_os() == 'Windows':
-        if 'powershell' in shell or 'pwsh' in shell:
-            subprocess.run(['pwsh', '-Command', '.venv\\Scripts\\Activate.ps1'])
-        if 'cmd' in shell:
-            subprocess.run(['cmd.exe', '/k', '.venv\\Scripts\\activate.bat'])
-    elif get_name_os() == 'Unix':
-        subprocess.run(['pwsh', '-Command', '.venv\\bin\\Activate.ps1'])
 
 
 def main():
