@@ -18,17 +18,8 @@ import platform
 import inspect
 
 
-def some_func_1(a: int, b: int):
-    return a + b
-
-
-def some_func_2():
-    print('some text')
-
-
-def is_path_venv_file(path_file):
-    venv_file = f'{os.getcwd()}{path_file}'
-    if os.path.isfile(venv_file):
+def is_path_file(path_file):
+    if os.path.isfile(path_file):
         return True
     else:
         return False
@@ -38,24 +29,7 @@ def get_name_os():
     return platform.system()
 
 
-def main():
-    # path_venv_file = '/.venv/Scripts/python.exe'
-    # if is_path_venv_file(path_venv_file):
-    #     print(f'+ Файл {path_venv_file} існує')
-    # else:
-    #     print(f'- Файл {path_venv_file} не існує')
-
-    # subprocess.run(['powershell', '-Command', f'ls "{os.getcwd()}"'])
-    
-    # !
-    # subprocess.run(['powershell', '-Command', 'py -m venv .venv2'])
-
-    # print(inspect.get(inspect.currentframe()))
-    # print(inspect.args(subprocess.run(['powershell', '-Command', 'ls'])))
-    # print(inspect.signature( subprocess.run(['powershell', '-Command', 'ls']) ).arguments)
-
-    # print(get_name_os())
-
+def venv_activate():
     shell = os.environ.get('SHELL') or os.environ.get('COMSPEC', '').lower()
     
     if get_name_os() == 'Windows':
@@ -66,18 +40,33 @@ def main():
     elif get_name_os() == 'Unix':
         subprocess.run(['pwsh', '-Command', '.venv\\bin\\Activate.ps1'])
 
+
+def main():
+    path_venv_file = '/.venv/Scripts/python.exe'
+    venv_file = f'{os.getcwd()}{path_venv_file}'
+    
+    if is_path_file(venv_file):
+        print(f'+ Файл {venv_file} існує')
+    else:
+        print(f'- Файл {venv_file} не існує')
+        subprocess.run(['pwsh', '-Command', 'py venv .venv'])
+        venv_activate()
+
+        path_requests_file = '/requests.txt'
+        requests_file = f'{os.getcwd()}{path_requests_file}'
+        
+        if not is_path_file(requests_file):
+            subprocess.run(['pwsh', '-Command', 'pip install -r requests.txt'])
+            print('Install libs from requests.txt')
+        else:
+            subprocess.run(['pwsh', '-Command', 'type nul > requests.txt; pip install django; pip freeze > requests.txt'])
+            print('To create file requests.txt and writing installing libs to requests.txt')
+
+    
     # # !!!
     # # if you want to run commands inside the activated environment, you should:
     # subprocess.run(['pwsh', '-Command', '& .venv\\Scripts\\Activate.ps1; python your_script.py'])
     
-    
-    # subprocess.run(['pwsh', '-Command', f'ls "{os.getcwd()}"'])
-    
-    # try:
-    #     subprocess.run(['pwsh', '-Command', f'ls "{os.getcwd()}"'])
-    # except FileNotFoundError as e:
-    #     subprocess.run(['powershell', '-Command', f'ls "{os.getcwd()}"'])
-
 
 if __name__ == '__main__':
     main()
