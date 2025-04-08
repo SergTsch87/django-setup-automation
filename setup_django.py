@@ -67,7 +67,24 @@ def get_name_os():
 
 
 def main():
-    pass
+    base_dir = Path.cwd()
+    venv_dir = base_dir / '.venv'
+    requirements_txt = base_dir / 'requirements.txt'
+
+    venv_python = venv_dir / 'Scripts' / 'python.exe' if get_os() == 'Windows' else venv_dir / 'bin' / 'python'
+
+    if not is_file(venv_python):
+        create_venv(venv_dir)
+    else:
+        print(f'"+ Virtual environment already exists: {venv_python}')
+
+    install_requirements(venv_python, requirements_txt)
+
+    # Optional: Activate env and run another script
+    # command = activate_virtual_env() + ['python', 'your_script.py']
+    # subprocess.run(' '.join(command), shell=True)
+
+    
     # path_venv_file = '/.venv/Scripts/python.exe'
     # venv_file = f'{os.getcwd()}{path_venv_file}'
     
