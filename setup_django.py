@@ -45,6 +45,15 @@ def activate_venv():
         return ['pwsh', '-Command', '& .venv/bin/Activate.ps1;']
 
 
+def install_requirements(venv_python: Path, requirements_file: Path):
+    if requirements_file.exists():
+        print(f'Installing libraries from {requirements_file.name}...')
+        subprocess.run([str(venv_python), '-m', 'pip', 'install', '-r', str(requirements_file)])
+    else:
+        print("Generating new requirements.txt...")
+        subprocess.run([str(venv_python), '-m', 'pip', 'install', 'django'])
+        subprocess.run([str(venv_python), '-m', 'pip', 'freeze'], stdout=requirements_file.open('w'))
+
 # def is_path_file(path_file):
 #     if os.path.isfile(path_file):
 #         return True
@@ -58,25 +67,26 @@ def get_name_os():
 
 
 def main():
-    path_venv_file = '/.venv/Scripts/python.exe'
-    venv_file = f'{os.getcwd()}{path_venv_file}'
+    pass
+    # path_venv_file = '/.venv/Scripts/python.exe'
+    # venv_file = f'{os.getcwd()}{path_venv_file}'
     
-    if is_path_file(venv_file):
-        print(f'+ Файл {venv_file} існує')
-    else:
-        print(f'- Файл {venv_file} не існує')
-        subprocess.run(['pwsh', '-Command', 'py venv .venv'])
-        venv_activate()
+    # if is_path_file(venv_file):
+    #     print(f'+ Файл {venv_file} існує')
+    # else:
+    #     print(f'- Файл {venv_file} не існує')
+    #     subprocess.run(['pwsh', '-Command', 'py venv .venv'])
+    #     venv_activate()
 
-        path_requests_file = '/requests.txt'
-        requests_file = f'{os.getcwd()}{path_requests_file}'
+    #     path_requests_file = '/requests.txt'
+    #     requests_file = f'{os.getcwd()}{path_requests_file}'
         
-        if not is_path_file(requests_file):
-            subprocess.run(['pwsh', '-Command', 'pip install -r requests.txt'])
-            print('Install libs from requests.txt')
-        else:
-            subprocess.run(['pwsh', '-Command', 'type nul > requests.txt; pip install django; pip freeze > requests.txt'])
-            print('To create file requests.txt and writing installing libs to requests.txt')
+    #     if not is_path_file(requests_file):
+    #         subprocess.run(['pwsh', '-Command', 'pip install -r requests.txt'])
+    #         print('Install libs from requests.txt')
+    #     else:
+    #         subprocess.run(['pwsh', '-Command', 'type nul > requests.txt; pip install django; pip freeze > requests.txt'])
+    #         print('To create file requests.txt and writing installing libs to requests.txt')
 
     
     # # !!!
